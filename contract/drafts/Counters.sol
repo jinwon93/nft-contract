@@ -56,4 +56,21 @@ contract KIP13 is IKIP13 {
     function supportsInterface(bytes4 interfaceId) external view returns (bool) {
         return _supportedInterfaces[interfaceId];
     }
+
+    function _registerInterface(bytes4 interfaceId) internal {
+        require(interfaceId != 0xffffffff, "KIP13: invalid interface id");
+        _supportedInterfaces[interfaceId] = true;
+    }
 }    
+
+
+pragma solidity ^0.5.0;
+
+
+
+contract KIP17 is KIP13, IKIP17 {
+    using SafeMath for uint256;
+    using Address for address;
+    using Counters for Counters.Counter;
+
+}
