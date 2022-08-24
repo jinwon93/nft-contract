@@ -73,4 +73,23 @@ contract KIP17 is KIP13, IKIP17 {
     using Address for address;
     using Counters for Counters.Counter;
 
-}
+
+    
+    bytes4 private constant _KIP17_RECEIVED = 0x6745782b;
+
+    
+    bytes4 private constant _ERC721_RECEIVED = 0x150b7a02;
+
+    
+    mapping (uint256 => address) private _tokenOwner;
+
+    // Mapping from token ID to approved address
+    mapping (uint256 => address) private _tokenApprovals;
+
+    // Mapping from owner to number of owned token
+    mapping (address => Counters.Counter) private _ownedTokensCount;
+
+    // Mapping from owner to operator approvals
+    mapping (address => mapping (address => bool)) private _operatorApprovals;
+
+}   
