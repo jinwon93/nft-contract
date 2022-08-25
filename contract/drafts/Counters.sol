@@ -92,4 +92,18 @@ contract KIP17 is KIP13, IKIP17 {
     // Mapping from owner to operator approvals
     mapping (address => mapping (address => bool)) private _operatorApprovals;
 
+
+     bytes4 private constant _INTERFACE_ID_KIP17 = 0x80ac58cd;
+
+    constructor () public {
+        
+        _registerInterface(_INTERFACE_ID_KIP17);
+    }
+
+    
+    function balanceOf(address owner) public view returns (uint256) {
+        require(owner != address(0), "KIP17: balance query for the zero address");
+
+        return _ownedTokensCount[owner].current();
+    }
 }   
