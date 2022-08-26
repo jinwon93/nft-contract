@@ -106,4 +106,25 @@ contract KIP17 is KIP13, IKIP17 {
 
         return _ownedTokensCount[owner].current();
     }
+
+
+     function ownerOf(uint256 tokenId) public view returns (address) {
+        address owner = _tokenOwner[tokenId];
+        require(owner != address(0), "KIP17: owner query for nonexistent token");
+
+        return owner;
+    }
+
+
+     function approve(address to, uint256 tokenId) public {
+        address owner = ownerOf(tokenId);
+        require(to != owner, "KIP17: approval to current owner");
+
+        require(msg.sender == owner || isApprovedForAll(owner, msg.sender),
+            "KIP17: approve caller is not owner nor approved for all"
+        );
+
+        _tokenApprovals[tokenId] = to;
+        emit Approval(owner, to, tokenId);
+    }
 }   
