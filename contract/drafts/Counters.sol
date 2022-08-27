@@ -127,4 +127,19 @@ contract KIP17 is KIP13, IKIP17 {
         _tokenApprovals[tokenId] = to;
         emit Approval(owner, to, tokenId);
     }
+
+
+    function getApproved(uint256 tokenId) public view returns (address) {
+        require(_exists(tokenId), "KIP17: approved query for nonexistent token");
+
+        return _tokenApprovals[tokenId];
+    }
+
+
+    function setApprovalForAll(address to, bool approved) public {
+        require(to != msg.sender, "KIP17: approve to caller");
+
+        _operatorApprovals[msg.sender][to] = approved;
+        emit ApprovalForAll(msg.sender, to, approved);
+    }
 }   
