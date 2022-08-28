@@ -142,4 +142,17 @@ contract KIP17 is KIP13, IKIP17 {
         _operatorApprovals[msg.sender][to] = approved;
         emit ApprovalForAll(msg.sender, to, approved);
     }
+
+
+    function isApprovedForAll(address owner, address operator) public view returns (bool) {
+        return _operatorApprovals[owner][operator];
+    }
+
+
+     function transferFrom(address from, address to, uint256 tokenId) public {
+        //solhint-disable-next-line max-line-length
+        require(_isApprovedOrOwner(msg.sender, tokenId), "KIP17: transfer caller is not owner nor approved");
+
+        _transferFrom(from, to, tokenId);
+    }
 }   
