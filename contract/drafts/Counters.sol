@@ -155,4 +155,18 @@ contract KIP17 is KIP13, IKIP17 {
 
         _transferFrom(from, to, tokenId);
     }
+
+    function safeTransferFrom(address from, address to, uint256 tokenId) public {
+        safeTransferFrom(from, to, tokenId, "");
+    }
+
+     function safeTransferFrom(address from, address to, uint256 tokenId, bytes memory _data) public {
+        transferFrom(from, to, tokenId);
+        require(_checkOnKIP17Received(from, to, tokenId, _data), "KIP17: transfer to non KIP17Receiver implementer");
+    }
+
+      function _exists(uint256 tokenId) internal view returns (bool) {
+        address owner = _tokenOwner[tokenId];
+        return owner != address(0);
+    }
 }   
