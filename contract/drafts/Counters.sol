@@ -169,4 +169,34 @@ contract KIP17 is KIP13, IKIP17 {
         address owner = _tokenOwner[tokenId];
         return owner != address(0);
     }
+
+
+    function _isApprovedOrOwner(address spender, uint256 tokenId) internal view returns (bool) {
+        require(_exists(tokenId), "KIP17: operator query for nonexistent token");
+        address owner = ownerOf(tokenId);
+        return (spender == owner || getApproved(tokenId) == spender || isApprovedForAll(owner, spender));
+    }
+
+
+     function _mint(address to, uint256 tokenId) internal {
+        require(to != address(0), "KIP17: mint to the zero address");
+        require(!_exists(tokenId), "KIP17: token already minted");
+
+        _tokenOwner[tokenId] = to;
+        _ownedTokensCount[to].increment();
+
+        emit Transfer(address(0), to, tokenId);
+    }
+
+
+    function _burn(address owner, uint256 tokenId) internal {
+        require(ownerOf(tokenId) == owner, "KIP17: burn of token that is not own");
+
+        _clearApproval(tokenId);
+
+        _ownedTokensCount[owner].decrement();
+        _tokenOwner[tokenId] = address(0);
+
+        emit Transfer(owner, address(0), tokenId);
+    }
 }   
