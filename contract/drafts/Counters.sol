@@ -199,4 +199,22 @@ contract KIP17 is KIP13, IKIP17 {
 
         emit Transfer(owner, address(0), tokenId);
     }
+
+    function _burn(uint256 tokenId) internal {
+        _burn(ownerOf(tokenId), tokenId);
+    }
+
+    function _transferFrom(address from, address to, uint256 tokenId) internal {
+        require(ownerOf(tokenId) == from, "KIP17: transfer of token that is not own");
+        require(to != address(0), "KIP17: transfer to the zero address");
+
+        _clearApproval(tokenId);
+
+        _ownedTokensCount[from].decrement();
+        _ownedTokensCount[to].increment();
+
+        _tokenOwner[tokenId] = to;
+
+        emit Transfer(from, to, tokenId);
+    }
 }   
