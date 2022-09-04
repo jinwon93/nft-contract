@@ -246,4 +246,20 @@ contract KIP17 is KIP13, IKIP17 {
 
         return false;
     }
+
+    function _clearApproval(uint256 tokenId) private {
+        if (_tokenApprovals[tokenId] != address(0)) {
+            _tokenApprovals[tokenId] = address(0);
+        }
+    }
 }   
+
+pragma solidity ^0.5.0;
+
+
+contract IKIP17Enumerable is IKIP17 {
+    function totalSupply() public view returns (uint256);
+    function tokenOfOwnerByIndex(address owner, uint256 index) public view returns (uint256 tokenId);
+
+    function tokenByIndex(uint256 index) public view returns (uint256);
+}
