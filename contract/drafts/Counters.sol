@@ -263,3 +263,13 @@ contract IKIP17Enumerable is IKIP17 {
 
     function tokenByIndex(uint256 index) public view returns (uint256);
 }
+
+
+pragma solidity ^0.5.0;
+
+contract KIP17Enumerable is KIP13, KIP17, IKIP17Enumerable {
+    
+    mapping(address => uint256[]) private _ownedTokens;
+
+    mapping(uint256 => uint256) private _ownedTokensIndex;
+}   
