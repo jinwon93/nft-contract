@@ -272,4 +272,18 @@ contract KIP17Enumerable is KIP13, KIP17, IKIP17Enumerable {
     mapping(address => uint256[]) private _ownedTokens;
 
     mapping(uint256 => uint256) private _ownedTokensIndex;
+
+
+    uint256[] private _allTokens;
+
+    mapping(uint256 => uint256) private _allTokensIndex;
+
+
+    bytes4 private constant _INTERFACE_ID_KIP17_ENUMERABLE = 0x780e9d63;
+
+
+    constructor () public {
+        // register the supported interface to conform to KIP17Enumerable via KIP13
+        _registerInterface(_INTERFACE_ID_KIP17_ENUMERABLE);
+    }
 }   
