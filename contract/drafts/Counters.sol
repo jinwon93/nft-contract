@@ -286,4 +286,14 @@ contract KIP17Enumerable is KIP13, KIP17, IKIP17Enumerable {
         // register the supported interface to conform to KIP17Enumerable via KIP13
         _registerInterface(_INTERFACE_ID_KIP17_ENUMERABLE);
     }
+
+
+    function tokenOfOwnerByIndex(address owner, uint256 index) public view returns (uint256) {
+        require(index < balanceOf(owner), "KIP17Enumerable: owner index out of bounds");
+        return _ownedTokens[owner][index];
+    }
+
+    function totalSupply() public view returns (uint256) {
+        return _allTokens.length;
+    }
 }   
