@@ -296,4 +296,15 @@ contract KIP17Enumerable is KIP13, KIP17, IKIP17Enumerable {
     function totalSupply() public view returns (uint256) {
         return _allTokens.length;
     }
+
+
+     function totalSupply() public view returns (uint256) {
+        return _allTokens.length;
+    }
+
+
+    function tokenByIndex(uint256 index) public view returns (uint256) {
+        require(index < totalSupply(), "KIP17Enumerable: global index out of bounds");
+        return _allTokens[index];
+    }
 }   
