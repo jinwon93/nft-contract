@@ -307,4 +307,21 @@ contract KIP17Enumerable is KIP13, KIP17, IKIP17Enumerable {
         require(index < totalSupply(), "KIP17Enumerable: global index out of bounds");
         return _allTokens[index];
     }
+
+
+      function _transferFrom(address from, address to, uint256 tokenId) internal {
+        super._transferFrom(from, to, tokenId);
+
+        _removeTokenFromOwnerEnumeration(from, tokenId);
+
+        _addTokenToOwnerEnumeration(to, tokenId);
+    }
+
+    function _mint(address to, uint256 tokenId) internal {
+        super._mint(to, tokenId);
+
+        _addTokenToOwnerEnumeration(to, tokenId);
+
+        _addTokenToAllTokensEnumeration(tokenId);
+    }
 }   
