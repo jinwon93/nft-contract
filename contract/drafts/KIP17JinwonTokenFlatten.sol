@@ -324,4 +324,24 @@ contract KIP17Enumerable is KIP13, KIP17, IKIP17Enumerable {
 
         _addTokenToAllTokensEnumeration(tokenId);
     }
+
+      function _burn(address owner, uint256 tokenId) internal {
+        super._burn(owner, tokenId);
+
+        _removeTokenFromOwnerEnumeration(owner, tokenId);
+        // Since tokenId will be deleted, we can clear its slot in _ownedTokensIndex to trigger a gas refund
+        _ownedTokensIndex[tokenId] = 0;
+
+        _removeTokenFromAllTokensEnumeration(tokenId);
+    }
+ 
+    function _tokensOfOwner(address owner) internal view returns (uint256[] storage) {
+        return _ownedTokens[owner];
+    }
+
+     function _addTokenToOwnerEnumeration(address to, uint256 tokenId) private {
+        _ownedTokensIndex[tokenId] = _ownedTokens[to].length;
+        _ownedTokens[to].push(tokenId);
+    }
+
 }   
