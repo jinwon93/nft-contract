@@ -366,4 +366,23 @@ contract KIP17Enumerable is KIP13, KIP17, IKIP17Enumerable {
         _ownedTokens[from].length--;
 
     }
+
+
+
+    function _removeTokenFromAllTokensEnumeration(uint256 tokenId) private {
+        
+
+        uint256 lastTokenIndex = _allTokens.length.sub(1);
+        uint256 tokenIndex = _allTokensIndex[tokenId];
+
+        
+        uint256 lastTokenId = _allTokens[lastTokenIndex];
+
+        _allTokens[tokenIndex] = lastTokenId; // Move the last token to the slot of the to-delete token
+        _allTokensIndex[lastTokenId] = tokenIndex; // Update the moved token's index
+
+        
+        _allTokens.length--;
+        _allTokensIndex[tokenId] = 0;
+    }
 }   
