@@ -386,3 +386,31 @@ contract KIP17Enumerable is KIP13, KIP17, IKIP17Enumerable {
         _allTokensIndex[tokenId] = 0;
     }
 }   
+
+
+pragma solidity ^0.5.0;
+
+
+contract IKIP17Metadata is IKIP17 {
+    function name() external view returns (string memory);
+    function symbol() external view returns (string memory);
+    function tokenURI(uint256 tokenId) external view returns (string memory);
+}
+
+
+
+pragma solidity ^0.5.0;
+
+
+contract KIP17Metadata is KIP13, KIP17, IKIP17Metadata {
+    // Token name
+    string private _name;
+
+    // Token symbol
+    string private _symbol;
+
+    // Optional mapping for token URIs
+    mapping(uint256 => string) private _tokenURIs;
+
+
+}    
