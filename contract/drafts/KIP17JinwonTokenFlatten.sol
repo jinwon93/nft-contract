@@ -438,4 +438,37 @@ contract KIP17Metadata is KIP13, KIP17, IKIP17Metadata {
         return _tokenURIs[tokenId];
     }
 
+    function _setTokenURI(uint256 tokenId, string memory uri) internal {
+        require(_exists(tokenId), "KIP17Metadata: URI set of nonexistent token");
+        _tokenURIs[tokenId] = uri;
+    }
+
+
+    function _burn(address owner, uint256 tokenId) internal {
+        super._burn(owner, tokenId);
+
+        // Clear metadata (if any)
+        if (bytes(_tokenURIs[tokenId]).length != 0) {
+            delete _tokenURIs[tokenId];
+        }
+    }
+}    
+
+
+pragma solidity ^0.5.0;
+
+
+
+contract Ownable {
+    address payable private _owner;
+
+    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
+
+    /**
+     * @dev Initializes the contract setting the deployer as the initial owner.
+     */
+    constructor () internal {
+        _owner = msg.sender;
+        emit OwnershipTransferred(address(0), _owner);
+    }
 }    
