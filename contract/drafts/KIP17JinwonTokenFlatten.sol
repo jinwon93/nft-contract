@@ -488,4 +488,14 @@ contract Ownable {
         emit OwnershipTransferred(_owner, address(0));
         _owner = address(0);
     }
+
+    function transferOwnership(address payable newOwner) public onlyOwner {
+        _transferOwnership(newOwner);
+    }
+
+    function _transferOwnership(address payable newOwner) internal {
+        require(newOwner != address(0), "Ownable: new owner is the zero address");
+        emit OwnershipTransferred(_owner, newOwner);
+        _owner = newOwner;
+    }
 }    
