@@ -551,5 +551,25 @@ contract MinterRole {
     function isMinter(address account) public view returns (bool) {
         return _minters.has(account);
     }
+      function isMinter(address account) public view returns (bool) {
+        return _minters.has(account);
+    }
 
+    function addMinter(address account) public onlyMinter {
+        _addMinter(account);
+    }
+
+    function renounceMinter() public {
+        _removeMinter(msg.sender);
+    }
+
+    function _addMinter(address account) internal {
+        _minters.add(account);
+        emit MinterAdded(account);
+    }
+
+    function _removeMinter(address account) internal {
+        _minters.remove(account);
+        emit MinterRemoved(account);
+    }
 }
