@@ -638,3 +638,29 @@ library MerkleProof {
         }
     }
 }
+
+
+pragma solidity ^0.5.0;
+contract KIP17Kbirdz is KIP17, KIP17Enumerable, KIP17Metadata, MinterRole {
+
+    
+    mapping (address => uint256) private _lastCallBlockNumber;
+    uint256 private _antibotInterval;
+
+    
+    uint256 private _mintIndexForSale;
+
+    uint256 private _mintLimitPerBlock;           
+    uint256 private _mintLimitPerSale;            
+
+    string  private _tokenBaseURI;
+    uint256 private _mintStartBlockNumber;        
+    uint256 private _maxSaleAmount;               
+    uint256 private _mintPrice;                   
+
+    string baseURI;
+    string notRevealedUri;
+    bool public revealed = false;
+    bool public publicMintEnabled = false;
+
+}
