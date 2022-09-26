@@ -663,4 +663,48 @@ contract KIP17Kbirdz is KIP17, KIP17Enumerable, KIP17Metadata, MinterRole {
     bool public revealed = false;
     bool public publicMintEnabled = false;
 
+
+
+     function _baseURI() internal view returns (string memory) {
+      return baseURI;
+    }
+
+    function _notRevealedURI() internal view returns (string memory) {
+      return notRevealedUri;
+    }
+
+    function setBaseURI(string memory _newBaseURI) public onlyMinter {
+      baseURI = _newBaseURI;
+    }
+
+    function setNotRevealedURI(string memory _newNotRevealedURI) public onlyMinter {
+      notRevealedUri = _newNotRevealedURI;
+    }
+
+    function reveal(bool _state) public onlyMinter {
+      revealed = _state;
+    }
+
+    function tokenURI(uint256 tokenId)
+      public
+      view
+      returns (string memory)
+    {
+      require(
+        _exists(tokenId),
+        "KIP17Metadata: URI query for nonexistent token"
+      );
+      
+      if(revealed == false) {
+        string memory currentNotRevealedUri = _notRevealedURI();
+        return bytes(currentNotRevealedUri).length > 0
+            ? string(abi.encodePacked(currentNotRevealedUri, String.uint2str(tokenId), ".json"))
+            : "";
+      }
+      string memory currentBaseURI = _baseURI();
+      return bytes(currentBaseURI).length > 0
+          ? string(abi.encodePacked(currentBaseURI, String.uint2str(tokenId), ".json"))
+          : "";
+    }
+
 }
