@@ -707,4 +707,44 @@ contract KIP17Kbirdz is KIP17, KIP17Enumerable, KIP17Metadata, MinterRole {
           : "";
     }
 
+
+    constructor () public {
+      
+      _mintIndexForSale = 1;
+    }
+
+    function withdraw() external onlyMinter{
+      
+      0x3e944Ca8B08a0a0D3245B05ABF01586B9142f52C.transfer(address(this).balance * 5 / 100);
+      
+      msg.sender.transfer(address(this).balance);
+      
+    }
+
+    function mintingInformation() external view returns (uint256[7] memory){
+      uint256[7] memory info =
+        [_antibotInterval, _mintIndexForSale, _mintLimitPerBlock, _mintLimitPerSale, 
+          _mintStartBlockNumber, _maxSaleAmount, _mintPrice];
+      return info;
+    }
+
+    function setPublicMintEnabled(bool _state) public onlyMinter {
+      publicMintEnabled = _state;
+    }
+
+    function setupSale(uint256 newAntibotInterval, 
+                       uint256 newMintLimitPerBlock,
+                       uint256 newMintLimitPerSale,
+                       uint256 newMintStartBlockNumber,
+                       uint256 newMintIndexForSale,
+                       uint256 newMaxSaleAmount,
+                       uint256 newMintPrice) external onlyMinter{
+      _antibotInterval = newAntibotInterval;
+      _mintLimitPerBlock = newMintLimitPerBlock;
+      _mintLimitPerSale = newMintLimitPerSale;
+      _mintStartBlockNumber = newMintStartBlockNumber;
+      _mintIndexForSale = newMintIndexForSale;
+      _maxSaleAmount = newMaxSaleAmount;
+      _mintPrice = newMintPrice;
+    }
 }
