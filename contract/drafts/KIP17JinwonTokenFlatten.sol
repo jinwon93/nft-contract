@@ -747,4 +747,34 @@ contract KIP17Kbirdz is KIP17, KIP17Enumerable, KIP17Metadata, MinterRole {
       _maxSaleAmount = newMaxSaleAmount;
       _mintPrice = newMintPrice;
     }
+
+
+    function publicMint(uint256 requestedCount) external payable {
+      require(publicMintEnabled, "The public sale is not enabled!");
+      require(_lastCallBlockNumber[msg.sender].add(_antibotInterval) < block.number, "Bot is not allowed");
+      require(block.number >= _mintStartBlockNumber, "Not yet started");
+      require(requestedCount > 0 && requestedCount <= _mintLimitPerBlock, "Too many requests or zero request");
+      require(msg.value == _mintPrice.mul(requestedCount), "Not enough Klay");
+      require(_mintIndexForSale.add(requestedCount) <= _maxSaleAmount + 1, "Exceed max amount");
+      require(balanceOf(msg.sender) + requestedCount <= _mintLimitPerSale, "Exceed max amount per person");
+
+      for(uint256 i = 0; i < requestedCount; i++) {
+        _mint(msg.sender, _mintIndexForSale);
+        _mintIndexForSale = _mintIndexForSale.add(1);
+      }
+      _lastCallBlockNumber[msg.sender] = block.number;
+    }
+
+    //Whitelist Mint
+    bytes32 public merkleRoot;
+    mapping(address => bool) public whitelistClaimed;
+    bool public whitelistMintEnabled = false;
+
+    function setMerkleRoot(bytes32 _merkleRoot) public onlyMinter {
+      merkleRoot = _merkleRoot;
+    }
+
+    function setWhitelistMintEnabled(bool _state) public onlyMinter {
+      whitelistMintEnabled = _state;
+    }
 }
