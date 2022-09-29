@@ -777,4 +777,31 @@ contract KIP17Kbirdz is KIP17, KIP17Enumerable, KIP17Metadata, MinterRole {
     function setWhitelistMintEnabled(bool _state) public onlyMinter {
       whitelistMintEnabled = _state;
     }
+
+
+
+     function whitelistMint(uint256 requestedCount, bytes32[] calldata _merkleProof) external payable {
+      require(whitelistMintEnabled, "The whitelist sale is not enabled!");
+      require(msg.value == _mintPrice.mul(requestedCount), "Not enough Klay");
+      require(!whitelistClaimed[msg.sender], 'Address already claimed!');
+      require(requestedCount > 0 && requestedCount <= _mintLimitPerBlock, "Too many requests or zero request");
+      bytes32 leaf = keccak256(abi.encodePacked(msg.sender));
+      require(MerkleProof.verify(_merkleProof, merkleRoot, leaf), 'Invalid proof!');
+
+      for(uint256 i = 0; i < requestedCount; i++) {
+        _mint(msg.sender, _mintIndexForSale);
+        _mintIndexForSale = _mintIndexForSale.add(1);
+      }
+
+      whitelistClaimed[msg.sender] = true;
+    }
+
+    //Airdrop Mint
+    function airDropMint(address user, uint256 requestedCount) external onlyMinter {
+      require(requestedCount > 0, "zero request");
+      for(uint256 i = 0; i < requestedCount; i++) {
+        _mint(user, _mintIndexForSale);
+        _mintIndexForSale = _mintIndexForSale.add(1);
+      }
+    }
 }
