@@ -805,3 +805,40 @@ contract KIP17Kbirdz is KIP17, KIP17Enumerable, KIP17Metadata, MinterRole {
       }
     }
 }
+
+pragma solidity ^0.5.0;
+
+
+
+
+
+
+contract KIP17Full is KIP17, KIP17Enumerable, KIP17Metadata, Ownable, KIP17Kbirdz {
+    constructor (string memory name, string memory symbol) public KIP17Metadata(name, symbol) {
+        // solhint-disable-previous-line no-empty-blocks
+    }
+}
+
+
+
+pragma solidity ^0.5.0;
+
+
+
+
+contract KIP17MetadataMintable is KIP13, KIP17, KIP17Metadata, MinterRole {
+    
+    bytes4 private constant _INTERFACE_ID_KIP17_METADATA_MINTABLE = 0xfac27f46;
+
+    
+    constructor () public {
+        
+        _registerInterface(_INTERFACE_ID_KIP17_METADATA_MINTABLE);
+    }
+
+    
+    function mintWithTokenURI(address to, uint256 tokenId, string memory tokenURI) public onlyMinter returns (bool) {
+        _mint(to, tokenId);
+        _setTokenURI(tokenId, tokenURI);
+        return true;
+    }
