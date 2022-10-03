@@ -841,4 +841,26 @@ contract KIP17MetadataMintable is KIP13, KIP17, KIP17Metadata, MinterRole {
         _mint(to, tokenId);
         _setTokenURI(tokenId, tokenURI);
         return true;
+}
+
+
+pragma solidity ^0.5.0;
+
+
+
+contract KIP17Mintable is KIP17, MinterRole {
+    
+    bytes4 private constant _INTERFACE_ID_KIP17_MINTABLE = 0xeab83e20;
+
+    
+    constructor () public {
+        
+        _registerInterface(_INTERFACE_ID_KIP17_MINTABLE);
     }
+
+    
+    function mint(address to, uint256 tokenId) public onlyMinter returns (bool) {
+        _mint(to, tokenId);
+        return true;
+    }
+}
