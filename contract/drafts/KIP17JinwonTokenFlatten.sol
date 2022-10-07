@@ -958,3 +958,36 @@ contract Pausable is PauserRole {
         require(!_paused, "Pausable: paused");
         _;
     }
+
+    modifier whenPaused() {
+        require(_paused, "Pausable: not paused");
+        _;
+    }
+
+    
+    function pause() public onlyPauser whenNotPaused {
+        _paused = true;
+        emit Paused(msg.sender);
+    }
+
+    function unpause() public onlyPauser whenPaused {
+        _paused = false;
+        emit Unpaused(msg.sender);
+    }
+
+
+}
+
+
+
+pragma solidity ^0.5.0;
+
+
+
+
+contract KIP17Pausable is KIP13, KIP17, Pausable {
+    
+    bytes4 private constant _INTERFACE_ID_KIP17_PAUSABLE = 0x4d5507ff;
+
+
+}
