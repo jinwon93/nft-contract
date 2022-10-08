@@ -989,5 +989,32 @@ contract KIP17Pausable is KIP13, KIP17, Pausable {
     
     bytes4 private constant _INTERFACE_ID_KIP17_PAUSABLE = 0x4d5507ff;
 
+       constructor () public {
+        // register the supported interface to conform to KIP17Pausable via KIP13
+        _registerInterface(_INTERFACE_ID_KIP17_PAUSABLE);
+    }
 
+    function approve(address to, uint256 tokenId) public whenNotPaused {
+        super.approve(to, tokenId);
+    }
+
+    function setApprovalForAll(address to, bool approved) public whenNotPaused {
+        super.setApprovalForAll(to, approved);
+    }
+
+    function transferFrom(address from, address to, uint256 tokenId) public whenNotPaused {
+        super.transferFrom(from, to, tokenId);
+    }
+}
+
+
+pragma solidity ^0.5.0;
+
+
+
+
+
+contract KIP17KbirdzToken is KIP17Full, KIP17Mintable, KIP17MetadataMintable, KIP17Burnable, KIP17Pausable {
+    constructor (string memory name, string memory symbol) public KIP17Full(name, symbol) {
+    }
 }
