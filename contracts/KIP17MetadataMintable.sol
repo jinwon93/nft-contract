@@ -1,7 +1,7 @@
 pragma solidity ^0.5.0;
 
 import "./KIP17Metadata.sol";
-// import "./roles/MinterRole.sol";
+import "./roles/MinterRole.sol";
 // import "./introspection/KIP13.sol";
 
 
