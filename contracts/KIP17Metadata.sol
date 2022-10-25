@@ -2,7 +2,7 @@ pragma solidity ^0.5.0;
 
 import "./KIP17.sol";
 import "./IKIP17Metadata.sol";
-// import "./introspection/KIP13.sol";
+import "./introspection/KIP13.sol";
 
 contract KIP17Metadata is KIP13, KIP17, IKIP17Metadata {
     
