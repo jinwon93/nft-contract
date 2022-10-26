@@ -2,7 +2,7 @@ pragma solidity ^0.5.0;
 
 import "./IKIP17Enumerable.sol";
 import "./KIP17.sol";
-// import "./introspection/KIP13.sol";
+import "./introspection/KIP13.sol";
 
 
 

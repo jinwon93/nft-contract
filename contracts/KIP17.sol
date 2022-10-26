@@ -3,10 +3,10 @@ pragma solidity ^0.5.0;
 import "./IKIP17.sol";
 import "./IERC721Receiver.sol";
 import "./IKIP17Receiver.sol";
-// import "./math/SafeMath.sol";
-// import "./utils/Address.sol";
+import "./math/SafeMath.sol";
+import "./utils/Address.sol";
 // import "./drafts/Counters.sol";
-// import "./introspection/KIP13.sol";
+import "./introspection/KIP13.sol";
 
 
 contract KIP17 is KIP13, IKIP17 {

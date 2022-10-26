@@ -2,8 +2,8 @@ import "./KIP17.sol";
 import "./KIP17Metadata.sol";
 import "./KIP17Enumerable.sol";
 import "./roles/MinterRole.sol";
-// import "./math/SafeMath.sol";
-// import "./utils/String.sol";
+import "./math/SafeMath.sol";
+import "./utils/String.sol";
 import "./MerkleProof.sol";
 
 

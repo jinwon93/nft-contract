@@ -3,7 +3,7 @@ pragma solidity ^0.5.0;
 
 
 import "./KIP17.sol";
-// import "./introspection/KIP13.sol";
+import "./introspection/KIP13.sol";
 
 
 
